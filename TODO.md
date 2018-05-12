@@ -12,3 +12,4 @@ On the Server:
 
 * logstash with [CSV](https://www.elastic.co/guide/en/logstash/6.0/plugins-filters-csv.html) to graphite
 * grafana reading from graphite
+* a cheap webserver to serve the data files
