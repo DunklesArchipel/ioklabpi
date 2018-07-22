@@ -22,17 +22,22 @@ class ADS1256:
                     raise Exception
                 self._read_and_set_next_channel(next_channel)
             timestamp, raw = self._read_and_set_next_channel(next_channel)
-            ret.append((timestamp, raw/1.67e6/self.gain))
+            ret.append((timestamp, raw/1677721/self.gain))
         return ret
 
     def _read_and_set_next_channel(self, next_channel):
         from time import time
-        # WARNING: against pin 3
-        ret = self.next_timestamp, read_and_set_next_channel((next_channel << 4) | 3)
-        # ret = self.next_timestamp, read_and_set_next_channel((next_channel << 4) | (1<<3))
+        ret = self.next_timestamp, read_and_set_next_channel(next_channel)
         self.next_channel = next_channel
         self.next_timestamp = time()
         return ret
+
+    def compute_channel(self, pin1, pin2=None):
+        if pin1 is None:
+            pin1 = 8
+        if pin2 is None:
+            pin2 = 8
+        return pin1<<4|pin2
 
     def _read_previous_channel(self):
         raise NotImplementedError

@@ -36,7 +36,7 @@ def measure_switching_performance(seconds=10):
                   10 :   10,
                    5 :    5,
                  2.5 :  2.5 }
-    
+ 
     for rate in sorted(theory.keys()):
         ads = ADS1256(rate)
         start = time()
@@ -49,12 +49,13 @@ def measure_switching_performance(seconds=10):
 
 # measure_switching_performance(2)
 
-def histogram(pin=4, rate=100, samples=200):
-    ads = ADS1256(rate, gain=64)
+def histogram(pin1, pin2, rate=100, samples=200):
+    ads = ADS1256(rate, gain=1)
+    channel = ads.compute_channel(pin1, pin2)
     ret = []
     for i in range(samples):
         # print(ads.read([pin]))
-        ret.append(ads.read([pin])[0][1]) 
+        ret.append(ads.read([channel])[0][1])
     return ret
 
-print(histogram())
+print(histogram(4, 3))
